@@ -1,0 +1,24 @@
+$BuildName = $env:BUILD_DEFINITIONNAME +'_'+$env:VERSIONNUMBER +'_'+ $env:BUILD_SOURCEBRANCHNAME 
+ 
+#Write-Host "##vso[build.updatebuildnumber]$BuildName"
+Write-Host "$BuildName"
+
+$BuildNumber = "$(Build.BuildNumber)"
+Write-Host "BuildNumber: $BuildNumber"
+
+# Get the build number
+$buildNumber = "$(Build.BuildNumber)"
+    
+# Split the build number by '.' (assuming it's in the format x.y.z)
+$buildNumberParts = $buildNumber -split '\.'
+    
+# Get the last part of the build number
+$lastPartOfBuildNumber = $buildNumberParts[-1]
+    
+# Set the last part of the build number to a variable in the variable store
+write-output $lastPartOfBuildNumber
+
+# Set variable named 'BuildSerial' to last part of build number (rev:r)
+Write-Host "##vso[task.setvariable variable=BuildSerial;]$lastPartOfBuildNumber"
+
+write-output $BuildSerial
